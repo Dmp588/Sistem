@@ -2,6 +2,7 @@
 #include <conio.h>
 #include <string.h>
 #include <stdio.h>
+#include<windows.h>
 using namespace std;
 
 struct Clientes{
@@ -69,6 +70,8 @@ struct productos{
 
 int opc=0;
 
+void gotoxy(int x, int y);
+
 void datoscliente();
 void mostrar(productos);
 
@@ -77,6 +80,7 @@ void menucarnes();
 void menugranos();
 void menusnacks();
 void menugolosinas();
+int comprar();
 
 int main ()
 {
@@ -116,8 +120,9 @@ int main ()
 			
 		case 3:
 			
-			
-		
+			comprar();
+			goto inicio;
+			system("cls");
 		
 			
 		case 4:
@@ -125,7 +130,7 @@ int main ()
 			
 		
 			
-		case 5: break;	
+		case 5: default:;	
 			
 	}
 	
@@ -167,6 +172,8 @@ void mostrar(productos){
 	
 	switch(opc){
 		
+		fflush(stdin);
+		
 		case 1: 
 				menulacteos();
 				system("cls");
@@ -184,9 +191,10 @@ void mostrar(productos){
 				menugolosinas();
 				system("cls");
 				
-		case 6: break;
+		case 6: default: fflush(stdin); system("cls"); int main();
 		
-				
+		
+			
 	}
 
 }
@@ -209,7 +217,7 @@ void menulacteos(){
 	
 		
 	switch(opc){
-	
+		fflush(stdin);
 	case 1: 
 			
 			cout<<"=====LECHE=====";
@@ -242,6 +250,7 @@ void menulacteos(){
 			goto menulacteos;
 			
 	case 5: mostrar(producto);
+		fflush(stdin);
 	}
 	
 }
@@ -263,7 +272,7 @@ void menucarnes(){
 	
 	switch(opc){
 
-	
+		fflush(stdin);
 	case 1: 
 			
 			cout<<"=====CERDO=====";
@@ -298,6 +307,9 @@ void menucarnes(){
 			goto menucarnes;
 			
 	case 5: mostrar(producto);
+	
+		fflush(stdin);
+		system("cls");
 	}
 	
 }
@@ -387,6 +399,8 @@ void menusnacks(){
 			cout<<"=====DORITOS=====";
 			cout<<"\n\n Valor: 0.50";
 			cout<<"\nCodigo: 03215488";
+			getch();
+			system("cls");
 			goto menusnacks;
 			
 	case 3: 
@@ -410,7 +424,7 @@ void menusnacks(){
 		
 }
 
-void menulgolosinas(){
+void menugolosinas(){
 				
 			menugolosinas:
 	
@@ -455,6 +469,132 @@ void menulgolosinas(){
 	case 4: mostrar(producto);
 	}
 	
-	
 }
+
+int comprar(){
+	
+	char prod[30];
+	int cant=0,i=0;
+	float prec=0,iva=0,subtotal,total=0,sub=0;
+	char si[]="si";char resp[20];
+	
+	
+	do{
+	cout<<"===============SELECCIONE LOS PRODUCTOS QUE DESEA LLEVAR==================";
+	
+	gotoxy(3,2);cout<<"LACTEOS";
+	
+	gotoxy(3,4);cout<<producto.lacteo.leche<<endl;
+	gotoxy(3,5);cout<<producto.lacteo.yogurt<<endl;
+	gotoxy(3,6);cout<<producto.lacteo.queso<<endl;
+	gotoxy(3,7);cout<<producto.lacteo.mantequilla<<endl;
+	
+	gotoxy(17,2);cout<<"CARNES";
+
+	gotoxy(17,4);cout<<producto.carne.cerdo<<endl;
+	gotoxy(17,5);cout<<producto.carne.pescado<<endl;
+	gotoxy(17,6);cout<<producto.carne.pollo<<endl;
+	gotoxy(17,7);cout<<producto.carne.res<<endl;
+	
+		gotoxy(31,2);cout<<"GRANOS";
+
+	gotoxy(31,4);cout<<producto.granos.arroz<<endl;
+	gotoxy(31,5);cout<<producto.granos.cebada<<endl;
+	gotoxy(31,6);cout<<producto.granos.maiz<<endl;
+	gotoxy(31,7);cout<<producto.granos.trigo<<endl;
+	
+		gotoxy(44,2);cout<<"SNACKS";
+
+	gotoxy(44,4);cout<<producto.snacks.cheetos<<endl;
+	gotoxy(44,5);cout<<producto.snacks.doritos<<endl;
+	gotoxy(44,6);cout<<producto.snacks.nachos<<endl;
+	gotoxy(44,7);cout<<producto.snacks.saritas<<endl;
+	
+	gotoxy(56,2);cout<<"GOLOSINAS";
+
+	gotoxy(56,4);cout<<producto.golosinas.bombones<<endl;
+	gotoxy(56,5);cout<<producto.golosinas.chocolates<<endl;
+	gotoxy(56,6);cout<<producto.golosinas.galletas<<endl;
+	
+	
+	
+	gotoxy(4,10);cout<<"Seleccione el Producto que desea llevar: ";
+	fflush(stdin);
+	cin.getline(prod,30,'\n');
+
+	if(strcmp(producto.lacteo.leche,prod)==0){prec=2.50;}
+	if(strcmp(producto.lacteo.yogurt,prod)==0){prec=1.50;}
+	if(strcmp(producto.lacteo.mantequilla,prod)==0){prec=2.20;}
+	if(strcmp(producto.lacteo.queso,prod)==0){prec=0.50;}
+	if(strcmp(producto.carne.cerdo,prod)==0){prec=3.50;}
+	if(strcmp(producto.carne.pescado,prod)==0){prec=3.75;}
+	if(strcmp(producto.carne.pollo,prod)==0){prec=3.25;}
+	if(strcmp(producto.carne.res,prod)==0){prec=4.50;}
+	if(strcmp(producto.granos.arroz,prod)==0){prec=0.45;}
+	if(strcmp(producto.granos.cebada,prod)==0){prec=1.50;}
+	if(strcmp(producto.granos.maiz,prod)==0){prec=0.25;}
+	if(strcmp(producto.granos.trigo,prod)==0){prec=0.75;}
+	if(strcmp(producto.snacks.cheetos,prod)==0){prec=0.35;}
+	if(strcmp(producto.snacks.doritos,prod)==0){prec=0.50;}
+	if(strcmp(producto.snacks.nachos,prod)==0){prec=0.65;}
+	if(strcmp(producto.snacks.saritas,prod)==0){prec=0.45;}
+	if(strcmp(producto.golosinas.bombones,prod)==0){prec=2.35;}
+	if(strcmp(producto.golosinas.chocolates,prod)==0){prec=3.50;}
+	if(strcmp(producto.golosinas.galletas,prod)==0){prec=0.65;}
+	
+	cout<<endl<<"Este Producto Tiene un Costo de: "<<prec;
+
+	cout<<endl<<"Cuantos desea llevar?..";cin>>cant;
+	
+		
+	
+	subtotal=prec*cant;
+	sub=sub+subtotal;
+	
+
+	
+	cout<<"COSTO : "<<subtotal;
+	cout<<"\nHasta El Momento su Pago es de: "<<sub;
+	
+	fflush(stdin);	
+	cout<<"\n\nDesea Otro producto? (si/no) :";
+	cin.getline(resp,20,'\n');
+	system("cls");
+	}while(strcmp(resp,si)==0);
+	
+	datoscliente();
+	
+	iva=(sub*0.12);
+	total=sub+iva;
+	
+	
+	gotoxy(3,1);cout<<"================FACTURA===========";
+	
+	
+	gotoxy(6,4);cout<<"NOMBRE:    "<<cliente.nombre;
+	gotoxy(6,5);cout<<"CEDULA:    "<<cliente.cedula;
+	gotoxy(6,6);cout<<"DIRECCION: "<<cliente.direccion;
+	
+	
+	gotoxy(6,9);cout<<"SUB TOTAL: "<<sub;
+	gotoxy(6,10);cout<<"IVA 12%: "<<iva;
+	
+	gotoxy(6,12);cout<<"EL TOTAL FINAL A PAGAR ES: "<<total;
+	
+		
+			
+	getch();
+	system("cls");
+}
+
+void gotoxy(int x,int y)
+{  
+      HANDLE hcon;  
+      hcon = GetStdHandle(STD_OUTPUT_HANDLE);  
+      COORD dwPos;  
+      dwPos.X = x;  
+      dwPos.Y= y;  
+      SetConsoleCursorPosition(hcon,dwPos);  
+ }   
+
 
