@@ -5,6 +5,15 @@
 #include<windows.h>
 using namespace std;
 
+struct nuevos{
+	
+	char nombrepro[30];
+	char codigo[10];
+	float precio;
+	
+}nuevo[20];
+
+
 struct Clientes{
 	
 	char nombre[30];
@@ -69,6 +78,8 @@ struct productos{
 }producto;
 
 int opc=0;
+int pos;
+int numerodeproductos;
 
 void gotoxy(int x, int y);
 
@@ -80,7 +91,11 @@ void menucarnes();
 void menugranos();
 void menusnacks();
 void menugolosinas();
-int comprar();
+void menunuevos();
+ int comprar();
+void nuevoproducto();
+void mostrarnuevos();
+
 
 int main ()
 {
@@ -127,7 +142,9 @@ int main ()
 			
 		case 4:
 		
-			
+			nuevoproducto();
+			goto inicio;
+			system("cls");
 		
 			
 		case 5: default:;	
@@ -164,7 +181,8 @@ void mostrar(productos){
 	cout<<"\n3.GRANOS ";
 	cout<<"\n4.SNACKS ";
 	cout<<"\n5.GOLOSINAS ";
-	cout<<"\n6.REGRESAR\n\n";
+	cout<<"\n6.NUEVOS PRODUCTOS";
+	cout<<"\n7.REGRESAR\n\n";
 	cout<<("Ingrese al apartado del menu usando el numero indice\n");
 	cout<<("===========================================================\n");
 	cin>>opc;
@@ -191,7 +209,12 @@ void mostrar(productos){
 				menugolosinas();
 				system("cls");
 				
-		case 6: default: fflush(stdin); system("cls"); int main();
+		case 6: 
+				
+				menunuevos();
+				system("cls");
+				
+		case 7: default: fflush(stdin); system("cls"); int main();
 		
 		
 			
@@ -471,6 +494,25 @@ void menugolosinas(){
 	
 }
 
+void menunuevos(){
+	
+	cout<<"=======NUEVOS PRODUCTOS=======";
+	
+	for(int i=0;i<numerodeproductos;i++){
+		
+	cout<<endl<<i+1<<". NOMBRE: "<<nuevo[i].nombrepro<<endl;
+	cout<<i+1<<". CODIGO: "<<nuevo[i].codigo<<endl;
+	cout<<i+1<<". PRECIO: "<<nuevo[i].precio<<endl<<endl;
+	
+		
+	}
+	
+	getch();
+	system("cls");
+	
+}
+
+
 int comprar(){
 	
 	char prod[30];
@@ -516,11 +558,29 @@ int comprar(){
 	gotoxy(56,5);cout<<producto.golosinas.chocolates<<endl;
 	gotoxy(56,6);cout<<producto.golosinas.galletas<<endl;
 	
+	mostrarnuevos();
+	
 	
 	
 	gotoxy(4,10);cout<<"Seleccione el Producto que desea llevar: ";
 	fflush(stdin);
 	cin.getline(prod,30,'\n');
+	
+	
+	while((strcmp(producto.lacteo.leche,prod)!=0)&&(strcmp(producto.lacteo.yogurt,prod)!=0)
+	&&(strcmp(producto.lacteo.mantequilla,prod)!=0)&&(strcmp(producto.lacteo.queso,prod)!=0)&&
+	(strcmp(producto.carne.cerdo,prod)!=0)&&(strcmp(producto.carne.pescado,prod)!=0)&&
+	(strcmp(producto.carne.pollo,prod)!=0)&&(strcmp(producto.carne.res,prod)!=0)&&
+	(strcmp(producto.granos.arroz,prod)!=0)&&(strcmp(producto.granos.cebada,prod)!=0)&&
+	(strcmp(producto.granos.maiz,prod)!=0)&&(strcmp(producto.granos.trigo,prod)!=0)&&
+	(strcmp(producto.snacks.cheetos,prod)!=0)&&(strcmp(producto.snacks.doritos,prod)!=0)&&
+	(strcmp(producto.snacks.nachos,prod)!=0)&&(strcmp(producto.snacks.saritas,prod)!=0)&&
+	(strcmp(producto.golosinas.bombones,prod)!=0)&&(strcmp(producto.golosinas.chocolates,prod)!=0)&&
+	(strcmp(producto.golosinas.galletas,prod)!=0)&&(strcmp(nuevo[0].nombrepro,prod)!=0)&&
+	(strcmp(nuevo[1].nombrepro,prod)!=0)&&(strcmp(nuevo[2].nombrepro,prod)!=0)&&
+	(strcmp(nuevo[3].nombrepro,prod)!=0)&&(strcmp(nuevo[4].nombrepro,prod)!=0)&&(strcmp(nuevo[5].nombrepro,prod)!=0)){
+		cout<<prod<<" No Existe, Por Favor Ingrese otro Producto: ";cin.getline(prod,30,'\n'); 	}
+	
 
 	if(strcmp(producto.lacteo.leche,prod)==0){prec=2.50;}
 	if(strcmp(producto.lacteo.yogurt,prod)==0){prec=1.50;}
@@ -541,6 +601,12 @@ int comprar(){
 	if(strcmp(producto.golosinas.bombones,prod)==0){prec=2.35;}
 	if(strcmp(producto.golosinas.chocolates,prod)==0){prec=3.50;}
 	if(strcmp(producto.golosinas.galletas,prod)==0){prec=0.65;}
+	
+	
+	for(int i=0;i<numerodeproductos;i++){
+		
+		if(strcmp(nuevo[i].nombrepro,prod)==0){prec=nuevo[i].precio;}
+	}
 	
 	cout<<endl<<"Este Producto Tiene un Costo de: "<<prec;
 
@@ -586,6 +652,37 @@ int comprar(){
 	getch();
 	system("cls");
 }
+
+void nuevoproducto(){
+
+	
+	cout<<"Cuantos Productos Nuevos desea Ingresar?: ";cin>>numerodeproductos;
+	
+	for(int i=0;i<numerodeproductos;i++){
+	fflush(stdin);
+	cout<<"\nIngrese un Nuevo Producto:      ";cin.getline(nuevo[i].nombrepro,30,'\n');
+	cout<<"Ingrese El Codigo del Producto: ";cin.getline(nuevo[i].codigo,10,'\n');
+	cout<<"Ingrese El Precio del Producto: ";cin>>nuevo[i].precio;	
+	pos=i;
+	cout<<endl;
+	}
+	
+	getch();
+	system("cls");
+}
+
+void mostrarnuevos(){
+	gotoxy(75,2);cout<<"NUEVOS PRODUCTOS";
+	
+	for(int i=0;i<numerodeproductos;i++){
+		
+	gotoxy(75,4+i);cout<<nuevo[i].nombrepro<<endl;
+		
+	}
+	
+}
+
+
 
 void gotoxy(int x,int y)
 {  
